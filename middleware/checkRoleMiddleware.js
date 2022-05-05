@@ -10,7 +10,9 @@ module.exports = function(role) {
             if (!token) {
                 return res.status(401).json({message: "Не авторизован"})
             }
-            const decoded = jwt.verify(token, 'random_secret_key123')
+            //let array = new Uint32Array(10);
+           // let secret = window.crypto.getRandomValues(array);
+            const decoded = jwt.verify(token, process.env.SECRET_KEY)
             if (decoded.role !== role) {
                 return res.status(403).json({message: "Нет доступа"})
             }
@@ -18,7 +20,7 @@ module.exports = function(role) {
             next()
         } catch (e) {
             res.status(401).json({message: "Не авторизован"})
-        } 
+        }
     };
 }
 

@@ -9,7 +9,9 @@ module.exports = function (req, res, next) {
         if (!token) {
             return res.status(401).json({message: "Не авторизован"})
         }
-        req.user = jwt.verify(token, 'random_secret_key123')
+       // let array = new Uint32Array(10);
+        //let secret = window.crypto.getRandomValues(array);
+        req.user = jwt.verify(token,process.env.SECRET_KEY)
         next()
     } catch (e) {
         res.status(401).json({message: "Не авторизован"})
