@@ -26,7 +26,7 @@
     "pg-hstore": "^2.3.3",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
-    "sequelize": "^6.6.2",
+    "sequelize": "^6.21.2",
     "x-xss-protection": "^2.0.0",
     "xss-clean": "^0.1.1"
   },
