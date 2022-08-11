@@ -16,7 +16,7 @@ import {
 } from "../http/convAPI";
 import convert_to_sql from "./RelationalAlgebraQuery";
 import {useHistory} from "react-router-dom";
-const session = require('express-session')
+
 let complexity
 
 const AlgButtons = observer(() => {
