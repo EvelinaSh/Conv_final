@@ -1,7 +1,7 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User, Group} = require('../models/models')
+const {User} = require('../models/models')
 
 const generateJwt = (id, email, role) => {
     return jwt.sign(
@@ -14,8 +14,11 @@ const generateJwt = (id, email, role) => {
 class UserController {
     async registration(req, res, next) {
         const {email, password, role, surname, name, patronymic, gr} = req.body
-        if (!email || !password) {
-            return next(ApiError.badRequest('Некорректный email или password'))
+        if (!email || !password || !role || !surname || !name || !patronymic || !gr ) {
+            return next(ApiError.badRequest('Имеются незаполненные поля'))
+        }
+        if (email.indexOf('@') === -1) {
+            return next(ApiError.badRequest('Поле email должно содержать @'))
         }
         const candidate = await User.findOne({where: {email}})
         if (candidate) {
@@ -29,13 +32,17 @@ class UserController {
 
     async login(req, res, next) {
         const {email, password} = req.body
+        if (!email || !password) return next(ApiError.internal('Не введен email и/или пароль'))
+        if (email.indexOf('@') === -1) {
+            return next(ApiError.badRequest('Поле email должно содержать @'))
+        }
         const user = await User.findOne({where: {email}})
         if (!user) {
-            return next(ApiError.internal('Пользователь не найден'))
+            return next(ApiError.internal('Указан неверный email или пароль'))
         }
         let comparePassword = bcrypt.compareSync(password, user.password)
         if (!comparePassword) {
-            return next(ApiError.internal('Указан неверный пароль'))
+            return next(ApiError.internal('Указан неверный email или пароль'))
         }
         const token = generateJwt(user.id, user.email, user.role)
         return res.json({token})

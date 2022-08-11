@@ -15,27 +15,6 @@ function TupleCalculusQuery (query_object) {
 }
 
 
-/*
-function DoQuote(y){
-
-    var posFirstQuote = y.indexOfstrpos(/\"/);
-    
-    while (posFirstQuote > 0){
-        w = w + y.substr(0, posFirstQuote);
-        w1 = y.substr(posFirstQuote + 1);
-        posSecondQuote = w1.indexOfstrpos(/\"/);
-        w2 = w1.substr(0, posSecondQuote);
-        w2 = w2.replace(" ", "~");
-        w2 = w2replace(".", "^");
-        w = w + w2;
-        y = substr(w1, posSecondQuote + 1);
-        posFirstQuote = y.indexOfstrpos(/\"/);
-    }
-        DoQuote = w + y;
-        return DoQuote;
-    }
-
-*/
 
 
 TupleCalculusQuery.prototype.make_sql = function() {
@@ -43,28 +22,7 @@ TupleCalculusQuery.prototype.make_sql = function() {
     console.log('herTCQ');
 
     return new Promise(function(resolve, reject) {
-          
-
-        //   var re = new RegExp();
-        // var reg = new RegExp();
-
-        // re=/^[a-zа-яё]+ AS [a-z](?:, [a-zа-яё]+ AS [a-z])*$/i;        //Выражение для списка типов переменных
-        // reg=/^[a-z]\.(?:[a-zа-яё]+|\*)(?:, [a-z]\.(?:[a-zа-яё]+|\*))*$/ig;       //Выражение для целевого списка
-        // // console.log('ПРОВЕРКА целевого списка', reg.test(this.target_list));
-        // if (re.test(this.alias)){
-        //     // массив алиасов
-        //     //console.log('ПРОВЕРКА алиасов', re.test(this.alias));
-
-        //     if (reg.test(this.target_list)){
-        //         // массив ЦС
-
-        //         // console.log('ПРОВЕРКА целевого списка', reg.test(this.target_list));
-
-        //     }
         let w;
-// }
-
-
         const inTables = {};
         const wVarInList = {};
         const wStrIn = this.alias;

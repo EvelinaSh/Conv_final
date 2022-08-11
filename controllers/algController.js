@@ -2,7 +2,7 @@ const os = require("os");
 const {Alg} = require('../models/models')
 const ApiError = require('../error/ApiError')
 const db = require('../db')
-const {QueryTypes} = require("sequelize");
+const {QueryTypes} = require("sequelize")
 
 
 

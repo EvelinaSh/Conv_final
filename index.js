@@ -5,11 +5,18 @@ const app = express()
 const sequelize = require('./db')
 const models = require('./models/models')
 const cors = require('cors') //для запросов с браузера
-app.use(cors())
-
+const xss = require('xss-clean')
 const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const PORT = process.env.PORT
+const https = require('https')
+const fs = require('fs')
+
+/*const options = {
+    key: fs.readFileSync('cert/key.pem', 'utf8'),
+    cert: fs.readFileSync('cert/cert.pem', 'utf8')
+}*/
+
 
 const rateLimit = require('express-rate-limit')
 const csrf = require("csrf");
@@ -22,19 +29,26 @@ const apiLimiter = rateLimit({
 
 // Apply the rate limiting middleware to API calls only
 
+app.use(cors())
 app.use(express.json())
 app.use('/api', router, apiLimiter)
-
 app.use(errorHandler)
-
-const xss = require('xss-clean');
 app.use(xss())
 
 const start = async () => {
     try {
         await sequelize.authenticate()
         await sequelize.sync()
-        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+
+       /* https.createServer(options, (req, res) => {
+            res.writeHead(200);
+            res.end('hello world\n');
+        })*/
+        app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+
+
+        //app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     } catch (e) {
         console.log(e)
     }

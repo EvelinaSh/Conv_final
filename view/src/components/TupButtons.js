@@ -1,7 +1,8 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {observer} from "mobx-react-lite";
-import {Button, Col} from "react-bootstrap";
+import {Button, Col, Overlay, Tooltip} from "react-bootstrap";
 import {Context} from "../index";
+import {check} from "../http/userAPI";
 import {
     createTup,
     deleteTup,
@@ -13,14 +14,13 @@ import {
 
 import {LOGIN_ROUTE} from "../utils/consts";
 import {useHistory} from "react-router-dom";
-import {check} from "../http/userAPI";
 
 
 const TupButtons = observer(() => {
 
     const {queries, user} = useContext(Context)
     const history = useHistory()
-
+    const target = useRef(null)
     useEffect(() => {
         queries.setGroup('')
         queries.setFam('')
@@ -132,13 +132,25 @@ const TupButtons = observer(() => {
         queries.setQuerySQL('')
     }
 
-
+    const testQ = () => {
+        queries.setDesc("Вывести список просроченных задач сотрудников с просрочкой более недели")
+        queries.setType("tasks AS X, employees AS Y, projects AS Z")
+        queries.setGoal("Y.full_name, X.name_task, X.deadline, Z.name_project")
+        queries.setQuery("X.date_of_completion-X.deadline>7 AND X.id_employee=Y.id_employee AND X.id_project=Z.id_project")
+    }
     return (
         user.isAuth ?
-            <Col className="p-2 mt-1 d-flex flex-column">
-                <Button className="p-2 mb-4  border" variant="light" onClick={() => logOut()}>Выйти</Button>
+            <Col className="p-2 mt-3 d-flex flex-column">
                 <Button className="p-2 mb-4  border" variant="light" onClick={getQ}>Принять запрос</Button>
-                <Button className="p-2 mb-4 border" variant="light" onClick={saveQ}>Сохранить запрос</Button>
+                <><Button ref={target} className="p-2 mb-4 border" variant="light" onClick={saveQ}>Сохранить запрос</Button>
+                    <Overlay target={target.current} show={queries.show} placement="left">
+                        {(props) => (
+                            <Tooltip id="overlay-example" {...props}>
+                                Не все поля заполнены
+                            </Tooltip>
+                        )}
+                    </Overlay>
+                </>
                 <Button className="p-2 mb-4 border" variant="light" onClick={updateQ}>Изменить запрос</Button>
                 <Button className="p-2 mb-4 border" variant="light" onClick={deleteQ}>Удалить запрос</Button>
                 <Button className="p-2 mb-4 border" variant="light" onClick={generateQ}>Генерировать SQL</Button>
@@ -146,9 +158,8 @@ const TupButtons = observer(() => {
                 <Button className="p-2 border" variant="light" onClick={viewQ}>Создать View</Button>
             </Col>
             :
-            <Col className="p-2 mt-1 d-flex flex-column">
-                <Button className="p-2 mb-4  border" variant="light"
-                        onClick={() => history.push(LOGIN_ROUTE)}>Войти</Button>
+            <Col className="p-2 mt-3 d-flex flex-column">
+                <Button className="p-2 mb-4 border" variant="light" onClick={testQ}>Пример запроса</Button>
                 <Button className="p-2 mb-4 border" variant="light" onClick={generateQ}>Генерировать SQL</Button>
                 <Button className="p-2 mb-4 border" variant="light" onClick={executeQ}>Выполнить SQL</Button>
             </Col>

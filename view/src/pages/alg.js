@@ -1,20 +1,22 @@
-import React from 'react';
-import {Container, Col, Row, Navbar, Nav, NavDropdown, Table} from "react-bootstrap";
+import React, {useContext} from 'react';
+import {Container, Col, Row, Table} from "react-bootstrap";
 import AlgButtons from "../components/AlgButtons";
 import AlgGroupFioQuery from "../components/AlgGroupFioQuery";
 import AlgDescType from "../components/AlgDescType";
 import AlgGoalList from "../components/AlgGoalList";
 import AlgBodyQuerySQL from "../components/AlgBodyQuerySQL";
 import TableResult from "../components/TableResult";
-import m from "../m.png";
+
+
 
 const Alg = () => {
 
     return (
 
-        <Container fluid style={{backgroundColor: '#fff6e8', minHeight:'100vh', maxHeight:'100%'}}>
-
-            <Row className="d-flex justify-content-between ml-1 mr-1">
+        <Container fluid style={{backgroundColor: '#FFF1F1',
+            minHeight:'100vh',
+            maxHeight:'100%'}}>
+                <Row className="d-flex justify-content-between ml-1 mr-1">
                 <Col md={10}>
                 <AlgGroupFioQuery/>
                 <AlgDescType/>
@@ -37,30 +39,7 @@ const Alg = () => {
 
 export default Alg;
 
-/*     <Navbar bg="light" expand="lg" sticky="top" variant="light">
-                <Container fluid>
-                    <Navbar.Brand href="#home">
-                        <img
-                            src={m}
-                            width="50"
-                            height="50"
-                            alt="logo"
-                        />
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav>
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
-                        </Nav>
-                        <Nav className="justify-content-end">
-                            <Nav.Link href="#link">Link</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-
+/*
 <Table striped bordered hover size="sm" style={{backgroundColor: '#FFFFFF'}}>
     <thead>
     <tr>

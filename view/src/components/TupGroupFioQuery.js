@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {observer} from "mobx-react-lite";
-import {Col, Dropdown, Form, Row} from "react-bootstrap";
+import {Col, Dropdown, Form, Pagination, Row} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 import {Context} from "../index";
 import {getAlg, getAlgUser, getTup, getTupUser} from "../http/convAPI";
@@ -15,6 +15,7 @@ const TupGroupFioQuery = observer(() => {
     useEffect(() => {
         if (user.isAuth === true)
             check().then(data => {
+                user.setUser(data)
                 if (data.role === "ADMIN") getTup().then(data => queries.setTuples(data))
                 else
                 getTupUser(data.id).then(data => {queries.setTuples(data)})
@@ -23,83 +24,33 @@ const TupGroupFioQuery = observer(() => {
     }, [queries])
 
     return (
-        <Row >
+        <Row className="mt-3">
 
-            <Col md={2} className="p-3">
-                <Form>
-                    <Form.Check
-                        onClick={() => {history.push('/alg')
-                            queries.setQuerySQL('')
-                            queries.setNamesCol(null)}}
-                        type="radio"
-                        label="Кортежи"
-                        id="tup"
-                        name="flag"
-                    />
-                </Form>
-            </Col>
-
-
-            <Col  md={2} className="p-2">
-                <Form>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="1.2">
-                            Группа
-                        </Form.Label>
-                        <Col sm="6">
-                            <Form.Control
-                                size="sm"
-                                value={queries.group}
-                                type="text"
-                                onChange={e => queries.setGroup(e.target.value)}
-                            />
-                        </Col>
-                    </Form.Group>
-                </Form>
-            </Col>
-
-            <Col md={2} className="p-2">
-                <Form>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="1.2">
-                            Фамилия
-                        </Form.Label>
-                        <Col sm="6">
-                            <Form.Control
-                                size="sm"
-                                type="text"
-                                value={queries.fam}
-                                onChange={e => queries.setFam(e.target.value)}/>
-                        </Col>
-                    </Form.Group>
-                </Form>
-            </Col>
-
-            <Col md={2} className="p-2">
+            <Col className="ml-4 p-2" >
                 <Form>
                     <Form.Group as={Row}>
                         <Form.Label  column sm="1.2">
                             Номер запроса
                         </Form.Label>
-                        <Col sm="5">
+                        <Col  style={{minWidth:'20vh', maxWidth:'20vh'}}>
                             <Form.Control
-                                size="sm"
                                 type="text"
                                 value={queries.nom}
-                                onChange={e => queries.setNom(e.target.value)}/>
+                                onChange={e => {queries.setNom(e.target.value)
+                                    queries.setShow(false)}}/>
                         </Col>
                     </Form.Group>
                 </Form>
             </Col>
 
-            <Col md={3} className="ml-4 p-2">
+            <Col className="ml-2 p-2">
                 <Form>
                     <Form.Group as={Row}>
                         <Form.Label column sm="1.2">Сохраненный запрос</Form.Label>
-                        <Col sm="6">
+                        <Col>
 
                             <Dropdown size="sm">
-                                <Dropdown.Toggle style={{backgroundColor: '#FFFFFF', color: '#000000', borderColor: '#c0c0c0'}}>{queries.selectedTup.query_name || "Новый запрос"}</Dropdown.Toggle>
+                                <Dropdown.Toggle style={{backgroundColor: '#FFFFFF', color: '#000000', borderColor: '#c0c0c0', minWidth:'20vh', maxWidth:'50vh'}}>{queries.selectedTup.query_name || "Новый запрос"}</Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     {queries.tuples.map(tup =>
                                         <Dropdown.Item

@@ -25,7 +25,6 @@ const ChoGoal_query = observer(() => {
 
 
     for (let i=0; i<NamesTables.length; i++) {
-        console.log(Fields)
         getField({table: NamesTables[i]}).then(data => {
             Fields[i]=Object.keys(data)
         })

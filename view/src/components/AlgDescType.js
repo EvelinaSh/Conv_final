@@ -12,7 +12,6 @@ const AlgDescType = observer(() => {
 
     useEffect(() => {
         getAllTable().then(data => queries.setTables(data))
-        console.log(queries.tables)
     }, [queries])
 
         const getTabMark = () => {
@@ -37,7 +36,8 @@ const AlgDescType = observer(() => {
                         placeholder="Введите описание запроса"
                         type="text"
                         value={queries.desc}
-                        onChange={e => queries.setDesc(e.target.value)}/>
+                        onChange={e => {queries.setDesc(e.target.value)
+                            queries.setShow(false)}}/>
                 </Form.Group>
 
                 <Form.Group as={Col}>
@@ -51,6 +51,7 @@ const AlgDescType = observer(() => {
                         value={queries.type}
                         onChange={e => {
                             queries.setType(e.target.value)
+                            queries.setShow(false)
                             for (let i=0; i<queries.tables.length; ++i){
                             if (queries.type.indexOf(queries.tables[i]) !== -1)
                             getTabMark()
@@ -65,6 +66,7 @@ const AlgDescType = observer(() => {
                             size="sm"
                             value={queries.selectedTable}
                             onChange={(e) => {
+                                queries.setShow(false)
                                 if (queries.type === '')
                                     queries.setType(e.target.value + ' AS ')
                                 else queries.setType(queries.type + ', ' + e.target.value + ' AS ')

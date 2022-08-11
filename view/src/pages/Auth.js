@@ -28,7 +28,6 @@ const Auth = observer(() => {
             let data;
             if (isLogin) {
                 data = await login(email, password);
-                console.log(data)
 
             } else {
                 data = await registration(email, password, surname, name, patronymic, gr);
@@ -45,8 +44,9 @@ const Auth = observer(() => {
     return (
         <Container
             className="d-flex justify-content-center align-items-center"
-            style={{height: window.innerHeight - 54}}
+            style={{height: window.innerHeight - 100}}
         >
+
             <Card style={{width: 600}} className="p-5">
                 <Row className="d-flex justify-content-between pl-3 mb-4">
                     <Image onClick={() => history.push(ALG_ROUTE)} width={19} height={13} src={arrow}/>

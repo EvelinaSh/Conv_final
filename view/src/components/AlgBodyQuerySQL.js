@@ -19,7 +19,8 @@ const AlgBodyQuerySQL = observer(() => {
                         placeholder="Введите тело запроса"
                         type="text"
                         value={queries.query}
-                        onChange={e => queries.setQuery(e.target.value)}
+                        onChange={e => {queries.setQuery(e.target.value)
+                        queries.setShow(false)}}
                     />
 
                     <ChoGoal_query/>

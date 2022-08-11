@@ -23,7 +23,8 @@ const AlgGoalList = observer(() => {
                         placeholder="Введите целевой список"
                         value={queries.goal}
                         type="text"
-                        onChange={e => queries.setGoal(e.target.value)}
+                        onChange={e => {queries.setGoal(e.target.value)
+                            queries.setShow(false)}}
                             />
                 </Row>
 

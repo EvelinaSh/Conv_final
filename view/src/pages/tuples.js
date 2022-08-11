@@ -11,7 +11,7 @@ import TableResult from "../components/TableResult";
 const Tuples = observer(() => {
 
     return (
-        <Container fluid style={{backgroundColor: '#E0FFFF', minHeight:'100vh', maxHeight:'100%'}}>
+        <Container fluid style={{backgroundColor: '#F2F6FF', minHeight:'100vh', maxHeight:'100%'}}>
             <Row className="d-flex justify-content-between ml-1 mr-1">
             <Col md={10}>
                 <TupGroupFioQuery/>

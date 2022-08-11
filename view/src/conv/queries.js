@@ -21,7 +21,7 @@ export default class Queries {
         this._selectedFis = []
         this._namTabs = []
         this._marks = []
-
+        this._show = {}
 
         this._tuples = []
         this._selectedTup = {}
@@ -29,6 +29,9 @@ export default class Queries {
         makeAutoObservable(this)
     }
 
+    setShow(show){
+        this._show = show
+    }
     setAlgs(algs) {
         this._algs = algs
     }
@@ -102,7 +105,9 @@ export default class Queries {
         this._checkTable = ch
     }
 
-
+    get show(){
+        return this._show
+    }
     get algs() {
         return this._algs
     }
