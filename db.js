@@ -9,7 +9,7 @@ module.exports = new Sequelize(
         host: process.env.DB_HOST,
         port: process.env.DB_PORT
     }*/
-    process.env.DATABASE_URL, {
+    process.env.HEROKU_POSTGRES_COBALT, {
         dialect: 'postgres',
         protocol: 'postgres',
         dialectOptions: {
